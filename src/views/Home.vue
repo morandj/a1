@@ -15,7 +15,7 @@
           class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
         >Play</button>
         <button
-          @click="editHunt({id: hunt.id, idx: index})"
+          @click="editHunt(index)"
           class="bg-green hover:bg-green-dark text-white font-bold py-2 px-4 rounded"
         >Edit</button>
       </li>
@@ -37,14 +37,17 @@ export default {
     }
   },
   methods: {
-    editHunt(x) {
-      let id = x.idx;
-      console.log("editHunt: ", x.idx, id);
-      this.$store.dispatch("setCurrentHunt", id);
-      this.$router.push({ name: "edithunt", params: { id } });
+    editHunt(index) {
+      // let id = x.idx;
+      // eslint-disable-next-line
+      console.log("editHunt: ", index);
+      this.$store.dispatch("setCurrentHunt", index);
+      this.$store.dispatch("setCurrentAnswers");
+      this.$router.push({ name: "edithunt", params: { index } });
     },
-    playHunt(x) {
-      console.log("playHunt: ", this.hunts[x]);
+    playHunt(index) {
+      // eslint-disable-next-line
+      console.log("playHunt: ", this.hunts[index]);
     }
   },
   name: "home",

@@ -57,6 +57,7 @@ export default {
   },
   methods: {
     signIn() {
+      // eslint-disable-next-line
       console.log("signIn:", this.signInForm.email, this.signInForm.password);
       this.$store.dispatch("userSignIn", {
         email: this.signInForm.email,

@@ -49,6 +49,7 @@ export default {
   },
   methods: {
     addHunt() {
+      // eslint-disable-next-line
       console.log("addHunt:", this.huntForm.title, this.huntForm.description);
       this.$store.dispatch("addHunt", {
         title: this.huntForm.title,

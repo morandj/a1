@@ -50,7 +50,9 @@ export default {
       this.$store.dispatch("userSignOut");
     },
     logCurrentHunt() {
+      // eslint-disable-next-line
       console.log("currentHunt:", this.$store.getters.currentHunt);
+      // eslint-disable-next-line
       console.log(":", this.$store.state.hunts);
     }
   }

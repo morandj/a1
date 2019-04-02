@@ -12,7 +12,8 @@ new Vue({
   store,
   render: h => h(App),
   created() {
-    console.log("Created...");
+    // eslint-disable-next-line
+    console.log("Created... in main.js... dispatching getHunts");
     // firebase.auth().onAuthStateChanged(user => {
     //   if (user) {
     //     this.$store.dispatch("autoSignIn", user);

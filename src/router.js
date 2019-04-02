@@ -48,7 +48,7 @@ const router = new Router({
       }
     },
     {
-      path: "/edithunt/:id",
+      path: "/edithunt/:index",
       name: "edithunt",
       component: EditHunt,
       meta: {
