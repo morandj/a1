@@ -12,7 +12,7 @@
             id="title"
             type="text"
             placeholder="Title"
-            v-model.trim="hunt.title"
+            v-model.trim="hunt.huntData.title"
           >
         </div>
         <div class="mb-4">
@@ -24,7 +24,7 @@
             type="text"
             placeholder="Description"
             rows="10"
-            v-model.trim="hunt.description"
+            v-model.trim="hunt.huntData.description"
           ></textarea>
         </div>
         <div>
@@ -73,10 +73,10 @@ export default {
     updateHunt() {
       // eslint-disable-next-line
       console.log(
-        "updateHunt:",
+        "EditHunt/updateHunt:",
         this.hunt,
-        this.hunt.title,
-        this.hunt.description
+        this.hunt.huntData.title,
+        this.hunt.huntData.description
       );
       this.$store.dispatch("updateHunt", this.hunt);
     }

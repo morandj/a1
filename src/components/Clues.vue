@@ -15,7 +15,8 @@
           rows="5"
           class="border rounded-t"
         ></textarea>
-        <input name="answer" v-model="answers[index]" class="border rounded-b">
+        <!-- <input name="answer" v-model="answers[index].answer" class="border rounded-b"> -->
+        <input name="answer" v-model="answers[index].answer" class="border rounded-b">
         <button
           @click="deleteClue(index)"
           class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -23,6 +24,7 @@
         >Delete</button>
       </div>
     </template>
+    <!-- Add New Clue -->
     <template>
       <div
         class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
@@ -43,12 +45,12 @@ export default {
   data() {
     return {
       question: "",
-      answer: "",
-      newClue: {
-        number: null,
-        question: "",
-        answer: ""
-      }
+      answer: ""
+      // newClue: {
+      //   number: null,
+      //   question: ""
+      // },
+      // newAnswer: { answer: "" }
     };
   },
   computed: {
@@ -59,27 +61,28 @@ export default {
       return this.$store.getters.clues;
     },
     answers() {
-      console.log("A", this.$store.getters.currentAnswers);
-      console.log("H:", this.$store.getters.currentHunt);
+      //console.log("A", this.$store.getters.currentAnswers);
+      // console.log("H:", this.$store.getters.currentHunt);
       return this.$store.getters.currentAnswers;
     }
   },
   methods: {
     addClue() {
       // eslint-disable-next-line
-      console.log("addClue: adding new clue");
-      this.newClue.number = this.clues.length + 1;
-      this.newClue.question = this.question;
-      this.newClue.answer = this.answer;
+      //console.log("newClue:", this.newClue, "newAnswer:", this.newAnswer);
       // eslint-disable-next-line
-      console.log(
-        "newClue:",
-        this.newClue.number,
-        this.newClue.question,
-        this.newClue.answer
-      );
-
-      this.clues.push(this.newClue);
+      console.log("addClue: adding new clue");
+      let clueNumber = this.clues.length + 1;
+      let newClue = { number: null, question: null };
+      newClue.number = clueNumber;
+      newClue.question = this.question;
+      let newAnswer = { number: null, answer: null };
+      newAnswer.number = clueNumber;
+      newAnswer.answer = this.answer;
+      // eslint-disable-next-line
+      console.log("newClue:", newClue, "newAnswer:", newAnswer);
+      this.clues.push(newClue);
+      this.answers.push(newAnswer);
       this.question = "";
       this.answer = "";
     },
@@ -87,6 +90,7 @@ export default {
       // eslint-disable-next-line
       console.log("deleteClue:", index);
       this.clues.splice(index, 1);
+      this.answers.splice(index, 1);
     }
   },
   components: {

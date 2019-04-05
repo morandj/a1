@@ -8,16 +8,14 @@
         :key="index"
         class="m-3 px-6 py-4 rounded shadow lg:flex flex-col"
       >
-        <div class="font-bold">{{ hunt.huntData.title }}</div>
-        <div>{{ hunt.huntData.description }}</div>
+        <div class="font-bold">{{ hunt.title }}</div>
+        <div>{{ hunt.description }}</div>
         <button
-          v-if="isAuthenticated"
           @click="playHunt(index)"
           class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
         >Play</button>
         <button
-          v-if="isAuthenticated"
-          @click="editHunt(index)"
+          @click="editHunt({ id: hunt.id, idx: index })"
           class="bg-green hover:bg-green-dark text-white font-bold py-2 px-4 rounded"
         >Edit</button>
       </li>
@@ -31,12 +29,6 @@
 
 export default {
   computed: {
-    isAuthenticated() {
-      return this.$store.getters.isAuthenticated;
-    },
-    isPlayer() {
-      return this.$store.getters.isPlayer;
-    },
     loading() {
       return this.$store.getters.loading;
     },
@@ -45,17 +37,16 @@ export default {
     }
   },
   methods: {
-    editHunt(index) {
-      // let id = x.idx;
+    editHunt(x) {
+      let id = x.idx;
       // eslint-disable-next-line
-      console.log("editHunt: ", index);
-      this.$store.dispatch("getCurrentHunt", index);
-      // this.$store.dispatch("getCurrentAnswers");
-      // this.$router.push({ name: "edithunt", params: { index } });
+      console.log("editHunt: ", x.idx, id);
+      this.$store.dispatch("setCurrentHunt", id);
+      this.$router.push({ name: "edithunt", params: { id } });
     },
-    playHunt(index) {
+    playHunt(x) {
       // eslint-disable-next-line
-      console.log("playHunt: ", this.hunts[index]);
+      console.log("playHunt: ", this.hunts[x]);
     }
   },
   name: "home",

@@ -17,9 +17,9 @@
           class="inline-block border border-blue rounded py-1 px-3 bg-blue text-white"
         >Sign Out</button>
         <button
-          @click="logCurrentHunt"
+          @click="logState"
           class="inline-block border border-blue rounded py-1 px-3 bg-blue text-white"
-        >CH</button>
+        >state</button>
       </template>
     </ul>
   </div>
@@ -49,11 +49,9 @@ export default {
     signOut() {
       this.$store.dispatch("userSignOut");
     },
-    logCurrentHunt() {
+    logState() {
       // eslint-disable-next-line
-      console.log("currentHunt:", this.$store.getters.currentHunt);
-      // eslint-disable-next-line
-      console.log(":", this.$store.state.hunts);
+      console.log("state:", this.$store.state);
     }
   }
 };
