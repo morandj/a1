@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <h1>New Hunt</h1>
+  <div id="newhunt" class="container mx-auto flex justify-center m-4">
     <div class="w-full max-w-xs">
+      <h1>New Hunt</h1>
       <form @submit.prevent class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div class="mb-4">
           <label class="block text-grey-darker text-sm font-bold mb-2" for="title">Title</label>
@@ -55,29 +55,6 @@ export default {
         title: this.huntForm.title,
         description: this.huntForm.description
       });
-      // fb.auth
-      //   .createUserWithEmailAndPassword(
-      //     this.signUpForm.email,
-      //     this.signUpForm.password
-      //   )
-      //   .then(cred => {
-      //     this.$store.commit("setCurrentUser", cred.user);
-      //     fb.usersCollection
-      //       .doc(cred.uid)
-      //       .set({
-      //         name: this.signUpForm.name
-      //       })
-      //       .then(() => {
-      //         this.$store.dispatch("getUserProfile");
-      //         this.$router.push("/dashboard");
-      //       })
-      //       .catch(err => {
-      //         console.log("Error getting user's profile", err);
-      //       });
-      //   })
-      //   .catch(err => {
-      //     console.log("Sign Up error", err);
-      //   });
     }
   }
 };

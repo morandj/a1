@@ -7,6 +7,7 @@ import SignIn from "@/views/SignIn.vue";
 import SignUp from "@/views/SignUp.vue";
 import NewHunt from "@/views/NewHunt.vue";
 import EditHunt from "@/views/EditHunt.vue";
+import PlayHunt from "@/views/PlayHunt.vue";
 import Settings from "@/views/Settings.vue";
 
 Vue.use(Router);
@@ -51,6 +52,15 @@ const router = new Router({
       path: "/edithunt/:index",
       name: "edithunt",
       component: EditHunt,
+      meta: {
+        // requiresAuth: true
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/playhunt/:index",
+      name: "playhunt",
+      component: PlayHunt,
       meta: {
         // requiresAuth: true
         requiresAuth: true

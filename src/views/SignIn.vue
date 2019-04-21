@@ -63,20 +63,6 @@ export default {
         email: this.signInForm.email,
         password: this.signInForm.password
       });
-      // fb.auth
-      //   .signInWithEmailAndPassword(
-      //     this.signInForm.email,
-      //     this.signInForm.password
-      //   )
-      //   .then(cred => {
-      //     this.$store.commit("setCurrentUser", cred.user);
-      //     this.$store.dispatch("getUserProfile");
-      //     this.$router.push("/dashboard");
-      //   })
-      //   .catch(err => {
-      //     // eslint-disable-next-line
-      //     console.log("Sign In error", err);
-      //   });
     }
   }
 };

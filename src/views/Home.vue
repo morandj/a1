@@ -1,24 +1,21 @@
 <template>
-  <div class="container mx-auto flex justify-center m-4">
-    <h1>Home</h1>
+  <div class="container mx-auto flex flex-col justify-center m-4 max-w-md w-full">
     <span v-if="loading" class="spinner"></span>
-    <ul class="max-w-md w-full">
-      <li
-        v-for="(hunt, index) in hunts"
-        :key="index"
-        class="m-3 px-6 py-4 rounded shadow lg:flex flex-col"
-      >
-        <div class="font-bold">{{ hunt.huntData.title }}</div>
-        <div>{{ hunt.huntData.description }}</div>
+    <ul class="list-reset">
+      <li v-for="(hunt, index) in hunts" :key="index" class="m-3 px-6 py-4 rounded shadow">
+        <div class="flex flex-col justify-start">
+          <div class="font-bold mb-1">{{ hunt.huntData.title }}</div>
+          <div class="mb-2">{{ hunt.huntData.description }}</div>
+        </div>
         <button
-          v-if="isAuthenticated"
+          v-if="isAuthenticated && isPlayer"
           @click="playHunt(index)"
-          class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+          class="btn btn-blue flex justify-end"
         >Play</button>
         <button
-          v-if="isAuthenticated"
+          v-if="isAuthenticated && isMaster"
           @click="editHunt(index)"
-          class="bg-green hover:bg-green-dark text-white font-bold py-2 px-4 rounded"
+          class="btn btn-green"
         >Edit</button>
       </li>
     </ul>
@@ -34,6 +31,9 @@ export default {
     isAuthenticated() {
       return this.$store.getters.isAuthenticated;
     },
+    isMaster() {
+      return this.$store.getters.isMaster;
+    },
     isPlayer() {
       return this.$store.getters.isPlayer;
     },
@@ -46,16 +46,23 @@ export default {
   },
   methods: {
     editHunt(index) {
-      // let id = x.idx;
       // eslint-disable-next-line
-      console.log("editHunt: ", index);
-      this.$store.dispatch("getCurrentHunt", index);
-      // this.$store.dispatch("getCurrentAnswers");
-      // this.$router.push({ name: "edithunt", params: { index } });
+      console.log("(1)...editHunt: ", index);
+      this.$store.dispatch("getCurrentHunt", index).then(() => {
+        console.log("(6)...Current hunt got:", this.$store.state.currentHunt);
+        this.$router.push({ name: "edithunt", params: { index } });
+      });
     },
     playHunt(index) {
       // eslint-disable-next-line
-      console.log("playHunt: ", this.hunts[index]);
+      console.log("(1)...playHunt: ", this.hunts[index]);
+      this.$store.dispatch("getCurrentHunt", index).then(() => {
+        console.log(
+          "(6)...Current hunt got in home/playhunt:",
+          this.$store.state.currentHunt
+        );
+        this.$router.push({ name: "playhunt", params: { index } });
+      });
     }
   },
   name: "home",

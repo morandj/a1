@@ -2,7 +2,7 @@
   <div class="container mx-auto flex justify-center m-4">
     <!-- <p>{{ $route.params.id }}</p> -->
     <div class="w-full max-w-sm">
-      <h1 class>Edit Hunt</h1>
+      <h1 class>Play Hunt</h1>
       <form @submit.prevent class="bg-white shadow-md rounded px-6 pt-4 pb-6 mb-4">
         <div class="mb-4">
           <label class="block text-grey-darker text-sm font-bold mb-2" for="title">Title</label>
@@ -39,10 +39,10 @@
 
         <div class="flex items-center justify-between">
           <button
-            @click="updateHunt"
+            @click="saveAnswers"
             class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
-          >Update Hunt</button>
+          >Save Answers</button>
         </div>
       </form>
       <p class="text-center text-grey text-xs">©2019 Hunts. All rights reserved.</p>
@@ -70,15 +70,15 @@ export default {
     };
   },
   methods: {
-    updateHunt() {
+    saveAnswers() {
       // eslint-disable-next-line
       console.log(
-        "EditHunt/updateHunt:",
+        "PlayHunt/updateAnswers:",
         this.hunt,
         this.hunt.huntData.title,
         this.hunt.huntData.description
       );
-      this.$store.dispatch("updateHunt", this.hunt);
+      this.$store.dispatch("updateAnswers");
     }
   },
   components: {

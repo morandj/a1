@@ -20,6 +20,11 @@
           @click="logState"
           class="inline-block border border-blue rounded py-1 px-3 bg-blue text-white"
         >state</button>
+        <button
+          @click="toggleMasterPlayer"
+          class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="button"
+        >{{ isM ? 'M' : 'P' }}</button>
       </template>
     </ul>
   </div>
@@ -30,13 +35,14 @@ export default {
   name: "Navigation",
   data() {
     return {
+      isM: true,
       items: [
         { title: "Home", to: "/", authReq: true, level: 0 },
         { title: "Sign In", to: "/signin", authReq: false, level: 0 },
         { title: "Sign Up", to: "/signup", authReq: false, level: 0 },
-        { title: "Browse", to: "/", authReq: false, level: 0 },
-        { title: "New", to: "/newhunt", authReq: true, level: 3 },
-        { title: "?", to: "/", authReq: false, level: 3 }
+        // { title: "Browse", to: "/", authReq: false, level: 0 },
+        { title: "New", to: "/newhunt", authReq: true, level: 3 }
+        // { title: "?", to: "/", authReq: false, level: 3 }
       ]
     };
   },
@@ -46,6 +52,18 @@ export default {
     }
   },
   methods: {
+    // for dev only
+    toggleMasterPlayer() {
+      // eslint-disable-next-line
+      console.log(
+        "isMaster",
+        this.$store.state.isMaster,
+        ", isPlayer",
+        this.$store.state.isPlayer
+      );
+      this.$store.dispatch("toggleMasterPlayer");
+      this.isM ? (this.isM = false) : (this.isM = true);
+    },
     signOut() {
       this.$store.dispatch("userSignOut");
     },
