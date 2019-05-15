@@ -23,7 +23,7 @@
             ></textarea>
             <input
               name="answer"
-              v-model="answers[index].answer"
+              v-model="masterSolution.clueAnswers[index].answer"
               class="px-3 py-1 border border-grey rounded-b"
             >
           </div>
@@ -41,10 +41,10 @@
     <template>
       <div
         v-if="!isPlayer"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+        class="shadow appearance-none border rounded mt-2 w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
       >
-        <textarea name="question" required v-model="question"></textarea>
-        <input name="answer" required v-model="answer">
+        <!-- <textarea name="question" required v-model="question"></textarea> -->
+        <!-- <input name="answer" required v-model="answer"> -->
         <button @click="addClue" class="btn btn-green" type="button">Add Clue</button>
       </div>
     </template>
@@ -54,7 +54,7 @@
 <script>
 // import Clue from "@/components/Clue";
 export default {
-  name: "Clues",
+  name: "EditClues",
   props: [],
   data() {
     return {
@@ -72,12 +72,20 @@ export default {
       return this.$store.getters.isPlayer;
     },
     clues() {
+      console.log("C", this.$store.getters.clues);
       return this.$store.getters.clues;
     },
     answers() {
-      console.log("A", this.$store.getters.currentAnswers);
+      console.log("A", this.$store.getters.currentClueAnswers);
       // console.log("H:", this.$store.getters.currentHunt);
-      return this.$store.getters.currentAnswers;
+      return this.$store.getters.currentClueAnswers;
+    },
+    masterSolution() {
+      return this.$store.getters.masterSolution;
+    },
+    masterClueAnswers() {
+      console.log("masterClueAnswers:", this.$store.getters.masterClueAnswers);
+      return this.$store.getters.masterClueAnswers;
     }
   },
   methods: {
@@ -89,22 +97,48 @@ export default {
       let clueNumber = this.clues.length + 1;
       let newClue = { number: null, question: null };
       newClue.number = clueNumber;
-      newClue.question = this.question;
+      // newClue.question = this.question;
+      // newClue.question = null;
       let newAnswer = { number: null, answer: null };
       newAnswer.number = clueNumber;
-      newAnswer.answer = this.answer;
+      // newAnswer.answer = this.answer;
       // eslint-disable-next-line
       console.log("newClue:", newClue, "newAnswer:", newAnswer);
       this.clues.push(newClue);
-      this.answers.push(newAnswer);
+      this.masterSolution.clueAnswers.push(newAnswer);
       this.question = "";
       this.answer = "";
+      // eslint-disable-next-line
+      console.log(
+        "clues:",
+        this.clues,
+        "answers:",
+        this.masterSolution.clueAnswers
+      );
     },
     deleteClue(index) {
       // eslint-disable-next-line
       console.log("deleteClue:", index);
+
+      let idx; // for re-numbering
+
       this.clues.splice(index, 1);
-      this.answers.splice(index, 1);
+
+      // re-number clues
+      idx = 0;
+      this.clues.forEach(element => {
+        idx += 1;
+        element.number = idx;
+      });
+
+      this.masterSolution.clueAnswers.splice(index, 1);
+
+      // re-number answers
+      idx = 0;
+      this.masterSolution.clueAnswers.forEach(element => {
+        idx += 1;
+        element.number = idx;
+      });
     }
   },
   components: {

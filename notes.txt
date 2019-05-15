@@ -1,0 +1,3 @@
+TBD
+  Database functions re master / player.
+  Freeze Hunt function. No changes to Hunt after play begins.

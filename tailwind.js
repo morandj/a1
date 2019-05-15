@@ -45,6 +45,16 @@ let defaultConfig = require("tailwindcss/defaultConfig")();
 let colors = {
   transparent: "transparent",
 
+  opaque: "rgba(0, 0, 0, 1.0)",
+  "trans-darkest": "rgba(0, 0, 0, 0.85)",
+  "trans-darker": "rgba(0, 0, 0, 0.75)",
+  "trans-dark": "rgba(0, 0, 0, 0.6)",
+  trans: "rgba(0, 0, 0, 0.5)",
+  "trans-light": "rgba(0, 0, 0, 0.4)",
+  "trans-lighter": "rgba(0, 0, 0, 0.25)",
+  "trans-lightest": "rgba(0, 0, 0, 0.15)",
+  clear: "rgba(0, 0, 0, 0.15)",
+
   black: "#22292f",
   "grey-darkest": "#3d4852",
   "grey-darker": "#606f7b",
@@ -550,6 +560,8 @@ module.exports = {
 
   minWidth: {
     "0": "0",
+    "32": "32px",
+    "90": "90px",
     full: "100%"
   },
 
@@ -591,6 +603,7 @@ module.exports = {
   */
 
   maxWidth: {
+    "90": "90px",
     xs: "20rem",
     sm: "30rem",
     md: "40rem",

@@ -17,8 +17,10 @@
           @click="editHunt(index)"
           class="btn btn-green"
         >Edit</button>
+        <button v-if="isAuthenticated && isMaster" @click="edHunt(index)" class="btn btn-green">Ed</button>
       </li>
     </ul>
+    <p class="text-center text-grey text-xs">©2019 Fox Hunts. All rights reserved.</p>
   </div>
 </template>
 
@@ -45,24 +47,38 @@ export default {
     }
   },
   methods: {
+    edHunt(index) {
+      // eslint-disable-next-line
+      console.log("(1)...editHunt: ", index);
+      this.$store
+        .dispatch("editCurrentHunt", { index: index, mode: "edit" })
+        .then(() => {
+          console.log("(6)...Current hunt got:", this.$store.state.currentHunt);
+          this.$router.push({ name: "edithunt", params: { index } });
+        });
+    },
     editHunt(index) {
       // eslint-disable-next-line
       console.log("(1)...editHunt: ", index);
-      this.$store.dispatch("getCurrentHunt", index).then(() => {
-        console.log("(6)...Current hunt got:", this.$store.state.currentHunt);
-        this.$router.push({ name: "edithunt", params: { index } });
-      });
+      this.$store
+        .dispatch("getCurrentHunt", { index: index, mode: "edit" })
+        .then(() => {
+          console.log("(6)...Current hunt got:", this.$store.state.currentHunt);
+          this.$router.push({ name: "edithunt", params: { index } });
+        });
     },
     playHunt(index) {
       // eslint-disable-next-line
       console.log("(1)...playHunt: ", this.hunts[index]);
-      this.$store.dispatch("getCurrentHunt", index).then(() => {
-        console.log(
-          "(6)...Current hunt got in home/playhunt:",
-          this.$store.state.currentHunt
-        );
-        this.$router.push({ name: "playhunt", params: { index } });
-      });
+      this.$store
+        .dispatch("playCurrentHunt", { index: index, mode: "play" })
+        .then(() => {
+          console.log(
+            "(6)...Current hunt got in home/playhunt:",
+            this.$store.state.currentHunt
+          );
+          this.$router.push({ name: "playhunt", params: { index } });
+        });
     }
   },
   name: "home",

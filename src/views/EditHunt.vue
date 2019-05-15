@@ -7,7 +7,6 @@
         <div class="mb-4">
           <label class="block text-grey-darker text-sm font-bold mb-2" for="title">Title</label>
           <input
-            :readonly="isPlayer"
             class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
             id="title"
             type="text"
@@ -18,7 +17,6 @@
         <div class="mb-4">
           <label class="block text-grey-darker text-sm font-bold mb-2" for="description">Description</label>
           <textarea
-            :readonly="isPlayer"
             class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
             id="description"
             type="text"
@@ -32,10 +30,18 @@
             @click="showClues = !showClues"
             class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
-          >{{ showClues ? 'Hide' : 'Show' }}</button>Clues
-          <clues v-if="showClues"></clues>
-          <!-- <new-clue></new-clue> -->
+          >{{ showClues ? 'Hide' : 'Show' }} Clues</button>
+          <edit-clues v-if="showClues"></edit-clues>
         </div>
+
+        <!-- <div>
+          <button
+            @click="showScavs = !showScavs"
+            class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="button"
+          >{{ showScavs ? 'Hide' : 'Show' }} Scavs</button>
+          <scavs v-if="showScavs"></scavs>
+        </div>-->
 
         <div class="flex items-center justify-between">
           <button
@@ -51,7 +57,8 @@
 </template>
 
 <script>
-import Clues from "@/components/Clues";
+import EditClues from "@/components/EditClues";
+// import Scavs from "@/components/Scavs";
 // import NewClue from "@/components/NewClue";
 export default {
   computed: {
@@ -67,6 +74,7 @@ export default {
   data() {
     return {
       showClues: true
+      // showScavs: true
     };
   },
   methods: {
@@ -82,7 +90,8 @@ export default {
     }
   },
   components: {
-    Clues
+    EditClues
+    // Scavs
     // NewClue
   }
 };

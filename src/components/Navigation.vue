@@ -3,10 +3,10 @@
     <img alt="fox logo" src="@/assets/fox.png" class="h-10 w-10 p-1">
     <ul class="list-reset flex">
       <template v-for="(item, index) in items">
-        <li v-if="isAuthenticated == item.authReq" :key="index" class="mr-3">
+        <li v-if="isAuthenticated == item.authReq" :key="index" class>
           <router-link
             :to="item.to"
-            class="inline-block border border-blue rounded py-1 px-3 bg-blue text-white"
+            class="no-underline mr-3 inline-block border border-blue rounded py-1 px-3 bg-blue text-white"
           >{{ item.title }}</router-link>
         </li>
       </template>
@@ -14,15 +14,15 @@
         <button
           v-if="isAuthenticated"
           @click="signOut"
-          class="inline-block border border-blue rounded py-1 px-3 bg-blue text-white"
+          class="mr-3 inline-block border border-blue rounded py-1 px-3 bg-blue text-white"
         >Sign Out</button>
         <button
           @click="logState"
-          class="inline-block border border-blue rounded py-1 px-3 bg-blue text-white"
+          class="mr-3 inline-block border border-blue rounded py-1 px-3 bg-blue text-white"
         >state</button>
         <button
           @click="toggleMasterPlayer"
-          class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          class="bg-blue hover:bg-blue-dark mr-3 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           type="button"
         >{{ isM ? 'M' : 'P' }}</button>
       </template>
