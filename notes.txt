@@ -1,3 +1,16 @@
+
+
 TBD
   Database functions re master / player.
   Freeze Hunt function. No changes to Hunt after play begins.
+src
+  assets
+  components
+  services
+  views
+  App.vue
+  firebaseConfig.js
+  main.js
+  router.js
+  store.js
+  

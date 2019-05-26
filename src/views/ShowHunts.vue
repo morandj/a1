@@ -1,8 +1,8 @@
 <template>
-  <div class="container mx-auto">
+  <div class="container mx-auto flex flex-col max-w-xs">
     <span v-if="loading" class="spinner"></span>
-    <h1 class="text-center">Home</h1>
-    <p class="text-center text-gray-500 text-xs">©2019 Fox Hunts. All rights reserved.</p>
+    <h1 class="text-center">Hunts</h1>
+    <get-hunts></get-hunts>
   </div>
 </template>
 
@@ -24,9 +24,8 @@ export default {
     }
   },
   methods: {},
-  name: "Home",
+  name: "ShowHunts",
   components: {
-    // HelloWorld
     GetHunts
   }
 };

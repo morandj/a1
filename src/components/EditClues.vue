@@ -24,14 +24,14 @@
             <input
               name="answer"
               v-model="masterSolution.clueAnswers[index].answer"
-              class="px-3 py-1 border border-grey rounded-b"
+              class="px-3 py-1 border border-gray-500 rounded-b"
             >
           </div>
         </div>
         <div v-if="!isPlayer">
           <button
             @click="deleteClue(index)"
-            class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
           >Delete</button>
         </div>
@@ -41,7 +41,7 @@
     <template>
       <div
         v-if="!isPlayer"
-        class="shadow appearance-none border rounded mt-2 w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+        class="shadow appearance-none border rounded mt-2 w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline"
       >
         <!-- <textarea name="question" required v-model="question"></textarea> -->
         <!-- <input name="answer" required v-model="answer"> -->

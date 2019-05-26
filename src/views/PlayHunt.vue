@@ -9,34 +9,43 @@
         <div class="mb-4">
           <button
             @click="showDescription = !showDescription"
-            class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
           >{{ showDescription ? 'Hide' : 'Show' }} Description</button>
 
           <div
             v-if="showDescription"
-            class="mt-2 whitespace-pre-wrap shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+            class="mt-2 whitespace-pre-wrap shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline"
           >{{ hunt.huntData.description }}</div>
         </div>
         <div>
           <button
             @click="showClues = !showClues"
-            class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
           >{{ showClues ? 'Hide' : 'Show' }} Clues</button>
           <play-clues v-if="showClues"></play-clues>
+          <!-- <new-clue></new-clue> -->
+        </div>
+        <div>
+          <button
+            @click="showScavs = !showScavs"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="button"
+          >{{ showScavs ? 'Hide' : 'Show' }} Scavs</button>
+          <play-scavs v-if="showScavs"></play-scavs>
           <!-- <new-clue></new-clue> -->
         </div>
 
         <div class="flex items-center justify-between">
           <button
             @click="saveAnswers"
-            class="mt-3 bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            class="mt-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
           >Save Answers</button>
         </div>
       </form>
-      <p class="text-center text-grey text-xs">©2019 Fox Hunts. All rights reserved.</p>
+      <p class="text-center text-gray-500 text-xs">©2019 Fox Hunts. All rights reserved.</p>
     </div>
   </div>
 </template>
@@ -44,6 +53,7 @@
 <script>
 import PlayClues from "@/components/PlayClues";
 // import NewClue from "@/components/NewClue";
+import PlayScavs from "@/components/PlayScavs";
 export default {
   computed: {
     isPlayer() {
@@ -58,7 +68,8 @@ export default {
   data() {
     return {
       showDescription: true,
-      showClues: true
+      showClues: true,
+      showScavs: true
     };
   },
   methods: {
@@ -74,7 +85,8 @@ export default {
     }
   },
   components: {
-    PlayClues
+    PlayClues,
+    PlayScavs
     // NewClue
   }
 };

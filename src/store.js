@@ -23,7 +23,12 @@ export default new Vuex.Store({
     currentScavStatuses: {},
     currentLimerick: {},
     currentTeam: {},
-    currentHunt: null,
+    currentHunt: {
+      huntData: {
+        clues: []
+      },
+      huntId: ""
+    },
     isAuthenticated: false,
     isMaster: true,
     isCaptain: false,
@@ -125,6 +130,7 @@ export default new Vuex.Store({
     toggleMasterPlayer({ commit }) {
       commit("setMasterAndPlayer");
     },
+    // Signup master & Players
     userSignUp({ dispatch, commit }, { name, email, password }) {
       // eslint-disable-next-line
       console.log("actions:userSignUp");
@@ -150,6 +156,8 @@ export default new Vuex.Store({
           console.log("Sign Up error", err);
         });
     },
+
+    // Signin Master & Players
     userSignIn({ dispatch, commit }, { email, password }) {
       // eslint-disable-next-line
       console.log("actions:userSignIn");
@@ -159,7 +167,8 @@ export default new Vuex.Store({
           commit("setCurrentUser", cred.user); //uid
           commit("setIsAuthenticated", true);
           dispatch("getUserProfile");
-          router.push("/");
+          dispatch("getHunts");
+          router.push("/showhunts");
           // eslint-disable-next-line
           console.log("Signed in:", cred.user, cred.user.email);
         })
@@ -168,6 +177,8 @@ export default new Vuex.Store({
           console.log("Sign In error", err);
         });
     },
+
+    // Signout Master & Player
     userSignOut({ commit }) {
       auth
         .signOut()
@@ -186,8 +197,9 @@ export default new Vuex.Store({
           console.log("Error Signing out:");
         });
     },
+
+    // get user profile from 'users' db and set state
     getUserProfile({ commit, state }) {
-      // get user profile from 'users' db and set state
       // eslint-disable-next-line
       console.log("Getting User Profile...");
       db.collection("users")
@@ -214,10 +226,7 @@ export default new Vuex.Store({
         description: description,
         rules: null,
         map: null,
-        clues: [
-          // { question: "First Clue", answer: "First Answer" },
-          // { question: "Second Clue", answer: "Second Answer" }
-        ],
+        clues: [],
         scavs: [],
         limerick: null,
         date: null,
@@ -242,7 +251,6 @@ export default new Vuex.Store({
           console.log("Error adding hunt", error);
         });
     },
-    addSolutions() {},
 
     getHunts({ commit }) {
       // eslint-disable-next-line
@@ -259,9 +267,9 @@ export default new Vuex.Store({
             };
             // eslint-disable-next-line
             console.log("doc, doc.data() in hunts:", doc, doc.data());
-            // hunt["id"] = doc.id;
+
             hunt.huntId = doc.id;
-            //hunt = doc.data();
+
             hunt.huntData = doc.data();
             // hunt["date"] = doc.data().date.toDate();
             // hunts.push(doc.data());
@@ -287,15 +295,10 @@ export default new Vuex.Store({
         state.currentUser,
         state.currentClueAnswers
       );
-      //let answers = state.currentClueAnswers;
-      // eslint-disable-next-line
-      // console.log("HERE");
-      // console.log("answers:", answers);
-      // console.log(answers.length > 0 ? "ok" : "not ok");
-      // console.log("?", hunt == state.currentHunt);
+
       let huntId = state.currentHunt.huntId;
       let huntDoc = state.currentHunt.huntData;
-      // let userId = state.currentUser.uid;
+
       commit("setLoading", true);
       db.collection("hunts")
         .doc(huntId)
@@ -303,25 +306,14 @@ export default new Vuex.Store({
         .then(() => {
           // eslint-disable-next-line
           console.log(">>>>", state.hunts, state.hunts[1].huntData.title);
-          //          dispatch("updateSolutions");
-          dispatch("updateMasterClueAnswers");
-          // dispatch("updateMasterScavAnswers");
-          // eslint-disable-next-line
-          console.log("Back from updateSolutions");
 
-          // if (answers.length > 0) {
-          //   let ans = { answers };
-          //   db.collection("hunts")
-          //     .doc(huntId)
-          //     .collection("players")
-          //     .doc(userId)
-          //     .set(ans)
-          //     .then(() => {});
-          // } else {
-          //   // eslint-disable-next-line
-          //   console.log("no answers yet...", answers);
-          // }
+          dispatch("updateMasterClueAnswers");
+          dispatch("updateMasterScavAnswers");
+          // eslint-disable-next-line
+          console.log("Back from updateMasterClueAnswers");
+
           commit("setLoading", false);
+
           // eslint-disable-next-line
           console.log("committing updateHunt");
           commit("updateHunt", huntDoc);
@@ -332,40 +324,7 @@ export default new Vuex.Store({
           commit("setLoading", false);
         });
     },
-    updateSolutions({ commit, state }) {
-      // eslint-disable-next-line
-      console.log(
-        "actions:updateSolutions",
-        state.currentHunt,
-        state.currentUser,
-        state.currentClueAnswers
-      );
-      let clueAnswers = state.currentClueAnswers;
-      // eslint-disable-next-line
-      console.log(clueAnswers.length > 0 ? "ok" : "not ok");
-      let huntId = state.currentHunt.huntId;
-      // let huntDoc = state.currentHunt.huntData;
-      // let userId = state.currentUser.uid;
 
-      if (clueAnswers.length > 0) {
-        //let ans = { clueAnswers };
-        commit("setLoading", true);
-        return db
-          .collection("hunts")
-          .doc(huntId)
-          .collection("solutions")
-          .doc("solution")
-          .set({ clueAnswers }, { merge: true })
-          .then(() => {
-            commit("setLoading", false);
-          });
-      } else {
-        // eslint-disable-next-line
-        console.log("no answers yet...", clueAnswers);
-        commit("setLoading", false);
-        return [];
-      }
-    },
     updateMasterClueAnswers({ commit, state }) {
       // eslint-disable-next-line
       console.log(
@@ -383,14 +342,13 @@ export default new Vuex.Store({
       // let userId = state.currentUser.uid;
 
       if (clueAnswers.length > 0) {
-        //let ans = { clueAnswers };
         commit("setLoading", true);
         return db
           .collection("hunts")
           .doc(huntId)
           .collection("solutions")
           .doc("solution")
-          .set({ clueAnswers }, { merge: true })
+          .set({ clueAnswers }, { merge: true }) // Note object wrap {}
           .then(() => {
             commit("setLoading", false);
           });
@@ -407,9 +365,10 @@ export default new Vuex.Store({
         "actions:updateMasterScavAnswers",
         state.currentHunt,
         state.currentUser,
+        state.masterSolution.scavAnswers,
         state.currentScavAnswers
       );
-      let scavAnswers = state.currentScavAnswers;
+      let scavAnswers = state.masterSolution.scavAnswers;
       // eslint-disable-next-line
       console.log(scavAnswers.length > 0 ? "ok" : "not ok");
       let huntId = state.currentHunt.huntId;
@@ -435,6 +394,7 @@ export default new Vuex.Store({
         return [];
       }
     },
+
     updatePlayerResponse({ commit, state }) {
       // eslint-disable-next-line
       console.log(
@@ -445,14 +405,11 @@ export default new Vuex.Store({
         state.currentClueAnswers
       );
       let playerResponse = state.playerResponse;
-      // eslint-disable-next-line
-      // console.log(response.length > 0 ? "ok" : "not ok");
+
       let huntId = state.currentHunt.huntId;
-      // let huntDoc = state.currentHunt.huntData;
       let userId = state.currentUser.uid;
 
       if (playerResponse) {
-        // let ans = { answers };
         commit("setLoading", true);
         return db
           .collection("hunts")
@@ -471,40 +428,6 @@ export default new Vuex.Store({
       }
     },
 
-    updateAnswers({ commit, state }) {
-      // eslint-disable-next-line
-      console.log(
-        "actions:updateAnswers",
-        state.currentHunt,
-        state.currentUser,
-        state.currentClueAnswers
-      );
-      let answers = state.currentClueAnswers;
-      // eslint-disable-next-line
-      console.log(answers.length > 0 ? "ok" : "not ok");
-      let huntId = state.currentHunt.huntId;
-      // let huntDoc = state.currentHunt.huntData;
-      let userId = state.currentUser.uid;
-
-      if (answers.length > 0) {
-        let ans = { answers };
-        commit("setLoading", true);
-        return db
-          .collection("hunts")
-          .doc(huntId)
-          .collection("players")
-          .doc(userId)
-          .set(ans)
-          .then(() => {
-            commit("setLoading", false);
-          });
-      } else {
-        // eslint-disable-next-line
-        console.log("no answers yet...", answers);
-        commit("setLoading", false);
-        return [];
-      }
-    },
     // Get the selected hunt and then get the MASTER solution for that hunt.
     editCurrentHunt({ commit, dispatch, state }, obj) {
       // eslint-disable-next-line
@@ -656,6 +579,7 @@ export default new Vuex.Store({
             len = state.currentHunt.huntData.scavs.length;
             let resScavs = [];
             for (let i = 0; i < len; i++) {
+              // eslint-disable-next-line
               console.log("in resScav");
               let num = i + 1;
               let obj = { number: num, response: "" };
@@ -676,174 +600,6 @@ export default new Vuex.Store({
           router.push("/");
           // eslint-disable-next-line
           console.log("Error getting player response", err);
-        });
-    },
-
-    // Get the selected hunt and then get the user's answers for that hunt.
-    getCurrentHunt({ commit, dispatch, state }, obj) {
-      // eslint-disable-next-line
-      console.log("(2)...in getCurrentHunt", obj.index, obj.mode);
-      commit("setCurrentHunt", obj.index);
-      //dispatch("checkUserProfile");
-      if (obj.mode == "play") {
-        return dispatch("getCurrentClueAnswers", obj.index).then(() => {
-          // eslint-disable-next-line
-          console.log("Answers got", state.currentClueAnswers);
-        });
-      } else {
-        return dispatch("getCurrentSolutions", obj.index).then(() => {
-          // eslint-disable-next-line
-          console.log("Solutions got", state.currentClueAnswers);
-        });
-      }
-    },
-
-    getCurrentSolutions({ commit, state }) {
-      // eslint-disable-next-line
-      console.log("(3)...state:", state);
-      // eslint-disable-next-line
-      console.log(
-        "(3a)...Getting Current Solutions...",
-
-        state.currentHunt.huntId
-      );
-      commit("setLoading", true);
-
-      let huntId = state.currentHunt.huntId;
-      // let answers; //answers
-      let docRef = db
-        .collection("hunts")
-        .doc(huntId)
-        .collection("solutions")
-        .doc("solution");
-      // eslint-disable-next-line
-      console.log("(3b)...About to get solutions...");
-      return docRef
-        .get()
-        .then(doc => {
-          if (doc.exists) {
-            let docData = doc.data();
-            // eslint-disable-next-line
-            console.log(
-              "(4)...Masters' solutions exist, doc.data:",
-              doc.data(),
-              "docData:",
-              docData,
-              "docData.solution:",
-              docData.solution
-            );
-            // eslint-disable-next-line
-            console.log("...in getCurrentSolutions", docData.clueAnswers);
-            //return docData.answers;
-            // return docData.clueAnswers;
-            return docData;
-          } else {
-            // eslint-disable-next-line
-            console.log(
-              "(4a)...Master has no solutions",
-              state.currentHunt.id,
-              huntId,
-              state.currentHunt.huntData.clues.length
-            );
-            let answers = [];
-            let len = state.currentHunt.huntData.clues.length;
-            for (let i = 0; i < len; i++) {
-              let num = i + 1;
-              let obj = { answer: "", number: num };
-              answers.push(obj);
-            }
-            // for (new Array(state.currentHunt.huntData.clues.length).fill(
-            //   0
-            // );
-            console.log("ans?", { answers });
-            return { answers: answers };
-          }
-        })
-        .then(answers => {
-          commit("setLoading", false);
-          // eslint-disable-next-line
-          console.log("(5)...answers =", answers);
-          commit("setCurrentClueAnswers", answers.clueAnswers);
-          // router.push({ name: "edithunt", params: { index } });
-        })
-        .catch(err => {
-          commit("setLoading", false);
-          router.push("/");
-          // eslint-disable-next-line
-          console.log("Error getting user answers", err);
-        });
-    },
-
-    getCurrentClueAnswers({ commit, state }) {
-      // eslint-disable-next-line
-      console.log("(3)...state:", state);
-      // eslint-disable-next-line
-      console.log(
-        "(3a)...Getting Current Answers...",
-        state.currentUser.uid,
-        state.currentHunt.huntId
-      );
-      commit("setLoading", true);
-      let userId = state.currentUser.uid;
-      let huntId = state.currentHunt.huntId;
-      // let answers; //answers
-      let docRef = db
-        .collection("hunts")
-        .doc(huntId)
-        .collection("players")
-        .doc(userId);
-      // eslint-disable-next-line
-      console.log("(3b)...About to get answers...");
-      return docRef
-        .get()
-        .then(doc => {
-          if (doc.exists) {
-            let docData = doc.data();
-            // eslint-disable-next-line
-            console.log(
-              "(4)...Player's answers exist, doc.data:",
-              doc.data(),
-              "docData:",
-              docData,
-              "docData.answers:",
-              docData.answers
-            );
-            return docData.answers;
-          } else {
-            // eslint-disable-next-line
-            console.log(
-              "(4a)...Player has no answers",
-              state.currentHunt.id,
-              huntId,
-              state.currentUser.uid,
-              userId,
-              state.currentHunt.huntData.clues.length
-            );
-            let answers = [];
-            let len = state.currentHunt.huntData.clues.length;
-            for (let i = 0; i < len; i++) {
-              let num = i + 1;
-              let obj = { answer: "", number: num };
-              answers.push(obj);
-            }
-            // for (new Array(state.currentHunt.huntData.clues.length).fill(
-            //   0
-            // );
-            return answers;
-          }
-        })
-        .then(answers => {
-          commit("setLoading", false);
-          // eslint-disable-next-line
-          console.log("(5)...answers =", answers);
-          commit("setCurrentClueAnswers", answers);
-          // router.push({ name: "edithunt", params: { index } });
-        })
-        .catch(err => {
-          commit("setLoading", false);
-          router.push("/");
-          // eslint-disable-next-line
-          console.log("Error getting user answers", err);
         });
     }
   },
@@ -873,6 +629,8 @@ export default new Vuex.Store({
       return state.currentHunt;
     },
     clues(state) {
+      // eslint-disable-next-line
+      console.log("geters:clues", state);
       return state.currentHunt.huntData.clues;
     },
     currentClueAnswers(state) {

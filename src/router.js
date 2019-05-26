@@ -5,6 +5,7 @@ import firebase from "firebase";
 import Home from "@/views/Home.vue";
 import SignIn from "@/views/SignIn.vue";
 import SignUp from "@/views/SignUp.vue";
+import ShowHunts from "@/views/ShowHunts.vue";
 import NewHunt from "@/views/NewHunt.vue";
 import EditHunt from "@/views/EditHunt.vue";
 import PlayHunt from "@/views/PlayHunt.vue";
@@ -35,8 +36,15 @@ const router = new Router({
       name: "signup",
       component: SignUp,
       meta: {
-        // requiresAuth: true
         requiresAuth: false
+      }
+    },
+    {
+      path: "/showhunts",
+      name: "showhunts",
+      component: ShowHunts,
+      meta: {
+        requiresAuth: true
       }
     },
     {
@@ -44,7 +52,6 @@ const router = new Router({
       name: "newhunt",
       component: NewHunt,
       meta: {
-        // requiresAuth: true
         requiresAuth: true
       }
     },
@@ -53,7 +60,6 @@ const router = new Router({
       name: "edithunt",
       component: EditHunt,
       meta: {
-        // requiresAuth: true
         requiresAuth: true
       }
     },
@@ -62,7 +68,6 @@ const router = new Router({
       name: "playhunt",
       component: PlayHunt,
       meta: {
-        // requiresAuth: true
         requiresAuth: true
       }
     },
@@ -71,7 +76,6 @@ const router = new Router({
       name: "settings",
       component: Settings,
       meta: {
-        // requiresAuth: true
         requiresAuth: false
       }
     }

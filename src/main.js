@@ -13,13 +13,15 @@ new Vue({
   render: h => h(App),
   created() {
     // eslint-disable-next-line
-    console.log("Created... in main.js... dispatching getHunts");
+    console.log("created()... in main.js");
     // firebase.auth().onAuthStateChanged(user => {
     //   if (user) {
     //     this.$store.dispatch("autoSignIn", user);
     //   }
     // });
-    this.$store.dispatch("getHunts");
+    // eslint-disable-next-line
+    // console.log("dispatching... getHunts");
+    //this.$store.dispatch("getHunts");
   }
 }).$mount("#app");
 

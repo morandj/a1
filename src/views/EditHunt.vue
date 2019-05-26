@@ -5,9 +5,9 @@
       <h1 class>Edit Hunt</h1>
       <form @submit.prevent class="bg-white shadow-md rounded px-6 pt-4 pb-6 mb-4">
         <div class="mb-4">
-          <label class="block text-grey-darker text-sm font-bold mb-2" for="title">Title</label>
+          <label class="block text-gray-800 text-sm font-bold mb-2" for="title">Title</label>
           <input
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline"
             id="title"
             type="text"
             placeholder="Title"
@@ -15,9 +15,9 @@
           >
         </div>
         <div class="mb-4">
-          <label class="block text-grey-darker text-sm font-bold mb-2" for="description">Description</label>
+          <label class="block text-gray-800 text-sm font-bold mb-2" for="description">Description</label>
           <textarea
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline"
             id="description"
             type="text"
             placeholder="Description"
@@ -28,37 +28,37 @@
         <div>
           <button
             @click="showClues = !showClues"
-            class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
           >{{ showClues ? 'Hide' : 'Show' }} Clues</button>
           <edit-clues v-if="showClues"></edit-clues>
         </div>
 
-        <!-- <div>
+        <div>
           <button
             @click="showScavs = !showScavs"
-            class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
           >{{ showScavs ? 'Hide' : 'Show' }} Scavs</button>
-          <scavs v-if="showScavs"></scavs>
-        </div>-->
+          <edit-scavs v-if="showScavs"></edit-scavs>
+        </div>
 
         <div class="flex items-center justify-between">
           <button
             @click="updateHunt"
-            class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
           >Update Hunt</button>
         </div>
       </form>
-      <p class="text-center text-grey text-xs">©2019 Hunts. All rights reserved.</p>
+      <p class="text-center text-gray-500 text-xs">©2019 Hunts. All rights reserved.</p>
     </div>
   </div>
 </template>
 
 <script>
 import EditClues from "@/components/EditClues";
-// import Scavs from "@/components/Scavs";
+import EditScavs from "@/components/EditScavs";
 // import NewClue from "@/components/NewClue";
 export default {
   computed: {
@@ -73,8 +73,8 @@ export default {
   },
   data() {
     return {
-      showClues: true
-      // showScavs: true
+      showClues: true,
+      showScavs: true
     };
   },
   methods: {
@@ -90,8 +90,8 @@ export default {
     }
   },
   components: {
-    EditClues
-    // Scavs
+    EditClues,
+    EditScavs
     // NewClue
   }
 };

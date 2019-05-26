@@ -12,11 +12,11 @@
         <div>{{ hunt.description }}</div>
         <button
           @click="playHunt(index)"
-          class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+          class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
         >Play</button>
         <button
           @click="editHunt({ id: hunt.id, idx: index })"
-          class="bg-green hover:bg-green-dark text-white font-bold py-2 px-4 rounded"
+          class="bg-green hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
         >Edit</button>
       </li>
     </ul>

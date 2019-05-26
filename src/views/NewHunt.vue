@@ -4,9 +4,9 @@
       <h1>New Hunt</h1>
       <form @submit.prevent class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div class="mb-4">
-          <label class="block text-grey-darker text-sm font-bold mb-2" for="title">Title</label>
+          <label class="block text-gray-800 text-sm font-bold mb-2" for="title">Title</label>
           <input
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline"
             id="title"
             type="text"
             placeholder="Title"
@@ -14,9 +14,9 @@
           >
         </div>
         <div class="mb-4">
-          <label class="block text-grey-darker text-sm font-bold mb-2" for="description">Description</label>
+          <label class="block text-gray-800 text-sm font-bold mb-2" for="description">Description</label>
           <textarea
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline"
             id="description"
             type="text"
             placeholder="Description"
@@ -27,12 +27,12 @@
         <div class="flex items-center justify-between">
           <button
             @click="addHunt"
-            class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
           >Add New Hunt</button>
         </div>
       </form>
-      <p class="text-center text-grey text-xs">©2019 Hunts. All rights reserved.</p>
+      <p class="text-center text-gray-500 text-xs">©2019 Hunts. All rights reserved.</p>
     </div>
   </div>
 </template>
