@@ -1,8 +1,7 @@
 <template >
   <div>
+    <!-- Modal -->
     <template>
-      <!-- <div v-show="modal" @click.self="toggleModal" class="overflow-auto flex">CLUE</div> -->
-      <!-- <div class="flex py-2"> -->
       <div v-if="modal" @click.self="toggleModal" class="flex fixed inset-0 z-50 overflow-auto">
         <div
           class="relative p-4 bg-gray-200 w-full max-w-sm m-auto flex flex-col border-2 border-gray-500 rounded-lg"
@@ -29,7 +28,7 @@
           <div
             class="whitespace-pre-wrap bg-gray-100 py-2 px-3 border border-gray-500 rounded-t m-3 mb-1"
           >{{ this.question }}</div>
-          <!-- <div>Index: {{this.index }} Answer: {{ this.answer }}</div> -->
+
           <div class="py-2 px-3">
             <input
               name="answer"
@@ -44,26 +43,27 @@
           >Save Answer</button>
         </div>
       </div>
-      <!-- </div> -->
     </template>
+
+    <!-- Clues -->
     <template>
-      <div class="bg-gray-200 mt-2 flex flex-wrap rounded-lg">
+      <div class="bg-gray-200 flex flex-wrap rounded-lg">
         <div v-for="(clue, index) in clues" :clue="clue" :key="index" class>
           <button
-            class="bg-gray-200 ml-3 mt-2 mb-2 hover:bg-gray-300 text-gray-900 text-4xl font-bold py-4 px-6 rounded-lg"
+            class="bg-gray-200 leading-none ml-3 mt-2 mb-2 hover:bg-gray-300 text-gray-900 text-4xl font-bold py-4 px-6 rounded-lg focus:outline-none focus:shadow-outline"
             :class="[playerResponse.clueResponses[index].response.trim() ? 'bg-green-400' : 'bg-red-400']"
             @click="clueClicked(clue, index)"
           >{{ clue.number }}</button>
         </div>
       </div>
     </template>
+
     <!-- :class="[playerResponse.clueResponses[index].answer.trim() ? 'bg-green-500' : 'bg-red-400']" -->
     <!-- :class="{ 'opacity-0': modal }" -->
   </div>
 </template>
 
 <script>
-// import Clue from "@/components/Clue";
 export default {
   name: "PlayClues",
   props: [],
@@ -99,19 +99,7 @@ export default {
     toggleModal() {
       this.modal = !this.modal;
     },
-    // clueStatus(index) {
-    //   let status;
-    // eslint-disable-next-line
-    // console.log("index:", index);
-    // eslint-disable-next-line
-    // console.log(this.clues.length, this.playerResponse.clueResponses.length);
-    // if ((this.playerResponse.clueResponses.length = this.clues.length)) {
-    //   status = this.playerResponse.clueResponses[index].answer.trim();
-    // } else {
-    //   status = false;
-    // }
-    // return ["bg-red-400"];
-    // },
+
     clueClicked(clue, index) {
       this.index = index;
       this.number = clue.number;
@@ -125,8 +113,6 @@ export default {
       this.modal = !this.modal;
     }
   },
-  components: {
-    // Clue
-  }
+  components: {}
 };
 </script>

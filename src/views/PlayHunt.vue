@@ -3,21 +3,25 @@
     <!-- <p>{{ $route.params.id }}</p> -->
     <div class="w-full max-w-sm">
       <form @submit.prevent class="bg-white shadow-md rounded px-6 pt-4 pb-6 mb-4">
+        <!-- Title -->
         <div class="mb-4">
           <div class="font-bold w-full py-2 px-3 text-2xl leading-tight">{{ hunt.huntData.title }}</div>
         </div>
+
+        <!-- Description -->
         <div class="mb-4">
           <button
             @click="showDescription = !showDescription"
             class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
           >{{ showDescription ? 'Hide' : 'Show' }} Description</button>
-
           <div
             v-if="showDescription"
             class="mt-2 whitespace-pre-wrap shadow appearance-none border rounded w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline"
           >{{ hunt.huntData.description }}</div>
         </div>
+
+        <!-- Show / Hide Clues -->
         <div>
           <button
             @click="showClues = !showClues"
@@ -25,18 +29,19 @@
             type="button"
           >{{ showClues ? 'Hide' : 'Show' }} Clues</button>
           <play-clues v-if="showClues"></play-clues>
-          <!-- <new-clue></new-clue> -->
         </div>
+
+        <!-- Show / Hide Scavs -->
         <div>
           <button
             @click="showScavs = !showScavs"
-            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold mt-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
           >{{ showScavs ? 'Hide' : 'Show' }} Scavs</button>
           <play-scavs v-if="showScavs"></play-scavs>
-          <!-- <new-clue></new-clue> -->
         </div>
 
+        <!-- Save Answers -->
         <div class="flex items-center justify-between">
           <button
             @click="saveAnswers"
@@ -52,7 +57,6 @@
 
 <script>
 import PlayClues from "@/components/PlayClues";
-// import NewClue from "@/components/NewClue";
 import PlayScavs from "@/components/PlayScavs";
 export default {
   computed: {
@@ -87,7 +91,6 @@ export default {
   components: {
     PlayClues,
     PlayScavs
-    // NewClue
   }
 };
 </script>
